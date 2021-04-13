@@ -23,6 +23,10 @@ class StageFixtures extends Fixture
 
             $physique = new Category();
             $physique->setName("Physique");
+            $informatique = new Category();
+            $informatique->setName("Informatique");
+            $chimie = new Category();
+            $chimie->setName("Chimie");
 
             $stage = new Internship();
             $stage->setAuthor($utilisateur)
@@ -32,11 +36,43 @@ class StageFixtures extends Fixture
                   ->setCity("Marseille")
                   ->setCountry("France")
                   ->setCompany("psi_racket")
-                  ->setStartedOn(new DateTime()) #erreur 'must implement interface DateTimeInterface'
+                  ->setStartedOn(new DateTime())
                   ->setFinishedOn(new DateTime());
+
+            for ($i=1; $i <= 20; $i++) {
+                $utilisateur = new User();
+                $nom = "";
+                $prenom = "";
+                $pseudo = "";
+                for ($j = 1; $j <= 7; $j++) {
+                    $cp = chr(mt . rand(97, 122));
+                    $cn = chr(mt . rand(97, 122));
+                    if ($j = 1) {
+                        $pseudo = $cp;
+                    }
+                    $nom = $nom . $cp;
+                    $prenom = $prenom . $cn;
+                    $pseudo = $pseudo . $cn;
+                }
+                $mail = $prenom . "." . $nom . "@ec-m.fr";
+                $prenom = ucfirst($prenom);
+                $nom = ucfirst($nom);
+                $utilisateur->setUsername($pseudo)
+                    ->setEmail($mail)
+                    ->setPassword("012345")
+                    ->setFirstName($prenom)
+                    ->setLastName($nom)
+                    ->setPromo(2023);
+
+
+
+
+
             $manager->persist($utilisateur);
             $manager->persist($stage);
             $manager->persist($physique);
+            $manager->persist($informatique);
+            $manager->perist($chimie);
 
         $manager->flush();
     }
