@@ -22,10 +22,17 @@
           rel="stylesheet">
 </head>
 
-<body {% block additionnal_body_block %}{% endblock %} class="theme-amber {% block additionnal_body_class %}{% endblock %}">
+<body {% block additionnal_body_block %}{% endblock %} class="theme-lime {% block additionnal_body_class %}{% endblock %}">
 
 <nav class="navbar">
     <div class="container-fluid">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="navbar-header">
             {% if is_granted('ROLE_USER') %}
                 {% block mobile_collapse %}
@@ -58,26 +65,6 @@
     </div>
 </nav>
 
-<section>
-    <aside id="leftsidebar" class="sidebar">
-        <div class="menu">
-            <ul class="list">
-                <li class="header">Menu</li>
-                <li {% if app.request.pathInfo starts with "/page1" %}class="active"{% endif %}>
-                    <a href="/page1">
-                        <i class="material-icons">search</i> <span>Page 1</span>
-                    </a>
-                </li>
-                <li {% if app.request.pathInfo starts with "/page2" %}class="active"{% endif %}>
-                    <a href="/page2" id="link_add">
-                        <i class="material-icons">add</i> <span>Page 2</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </aside>
-</section>
-
 <section class="content">
     <div class="container-fluid">
         {% block content %}
@@ -101,10 +88,10 @@
         {% endfor %}
     {% endfor %}
 </div>
-
 <script src="{{ asset('build/vendor.js') }}"></script>
 <script src="{{ asset('build/app.js') }}"></script>
 <script src="{{ asset('build/runtime.js') }}"></script>
+
 
 {% block page_js %}
 {% endblock %}

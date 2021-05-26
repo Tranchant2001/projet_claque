@@ -35,6 +35,8 @@ class User
      */
     private $password;
 
+    public $confirm_password;
+
     /**
      * @ORM\Column(type="array", nullable=true)
      */
